@@ -1,6 +1,6 @@
 import socket
 
-HOST = socket.gethostname() 
+HOST = '127.0.0.1' 
 PORT = 9500
 
 def connectSocket():
@@ -11,18 +11,19 @@ def connectSocket():
     
     while True:
     
-        s, clientAddress = s.accept()
+        x, clientAddress = s.accept()
         print('Connected: ', clientAddress)
         
-        data = s.recv(1024).decode()
+        data = x.recv(1024).decode()
         if (data == 'hello' or data == 'Hello'):
             response = ('Hi').encode()
-            s.send(response)
+            x.send(response)
+            break
         else:
-            response = ('Goodbye').edncode()
-            s.send(response)
-            
-        print('Terminating connection...')
-        s.close()
+            response = ('Goodbye').encode()
+            x.send(response)
+            break
+    print('Terminating connection...')
+    x.close()
 
 connectSocket()

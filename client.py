@@ -1,14 +1,13 @@
 import socket
 
-HOST = socket.gethostname() 
+HOST = '127.0.0.1' 
 PORT = 9500
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
-request = input('Type message to server: ')
-
-s.connect((HOST, PORT))
-
-result = s.recv(1024).decode()
-print(result)
-s.close()
+    s.connect((HOST, PORT))
+    request = input('Type message to server: ').encode()
+    s.send(request)
+    result = s.recv(1024).decode()
+    print(result)
+    s.close()
